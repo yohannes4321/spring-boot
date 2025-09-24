@@ -32,6 +32,16 @@ Java Development Kit (JDK 21 or higher)
 Apache Maven
 
 PostgreSQL (v15 or higher recommended)
+## Screenshots
+
+### 1. Registration Form
+![Registration Form](images/Screenshot%202025-09-24%20104601.png)
+
+### 2. Person List Table
+![Person List Table](images/Screenshot%202025-09-24%20104646.png)
+
+### 3. Update/Delete Functionality
+![Update/Delete Functionality](images/Screenshot%202025-09-24%20104659.png)
 
 Step 1: Start PostgreSQL Database
 
