@@ -48,6 +48,13 @@ Ensure PostgreSQL is running. Create the database if it doesn’t exist:
 ```
 CREATE DATABASE yohannes;
 ```
+```
+spring.datasource.url=jdbc:postgresql://localhost:5432/yohannes
+spring.datasource.username=postgres
+spring.datasource.password=mypassword
+spring.jpa.hibernate.ddl-auto=update
+
+```
 Step 2: Package the Application
 
 In the project root directory, run:
