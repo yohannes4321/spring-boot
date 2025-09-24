@@ -1,16 +1,6 @@
 # Person Management Application
 Overview
-
 This is a simple full-stack web application designed for managing a list of people. The application provides basic CRUD (Create, Read, Update, Delete) functionality for person records, each consisting of a unique ID, a name, and a phone number.
-
-Built With
-
-## Backend: Java with Spring Boot (REST API)
-
-## Database: PostgreSQL
-
-## Frontend: HTML, CSS, and JavaScript
-### 1. Registration Form
 ![Registration Form](images/Screenshot%202025-09-24%20104601.png)
 
 ### 2. Person List Table
@@ -19,14 +9,23 @@ Built With
 ### 3. Update/Delete Functionality
 ![Update/Delete Functionality](images/Screenshot%202025-09-24%20104659.png)
 Features
+Built With
+
+## Backend: Java with Spring Boot (REST API)
+
+## Database: PostgreSQL
+
+## Frontend: HTML, CSS, and JavaScript
+### 1. Registration Form
+
 
 ### Create: Register a new person with a name and phone number.
 
-### Read: Fetch and display a list of all registered people.
+#### Read: Fetch and display a list of all registered people.
 
-### Update: Modify the name and phone number for an existing person.
+#### Update: Modify the name and phone number for an existing person.
 
-### Delete: Remove a person record from the database.
+#### Delete: Remove a person record from the database.
 
 Unique ID: Each person record is assigned a unique ID upon creation.
 
