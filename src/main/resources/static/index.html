@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: auto; }
+        .form-section { margin-bottom: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        h2 { border-bottom: 2px solid #555; padding-bottom: 10px; }
+        input[type="text"] { padding: 10px; width: 250px; margin-right: 10px; border: 1px solid #ddd; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #0056b3; }
+        .output-section { margin-top: 20px; }
+        pre { background-color: #f4f4f4; padding: 15px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; }
+        .person-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .person-table th, .person-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .person-table th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Person Management System</h1>
+
+    <div class="form-section">
+        <h2>Register New Person (POST)</h2>
+        <form id="registrationForm">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="text" id="phonenumber" placeholder="Phone Number" required>
+            <button type="submit">Register Person</button>
+        </form>
+    </div>
+
+    <div class="form-section">
+        <h2>Fetch All People (GET)</h2>
+        <button onclick="getPeople()">Get All People</button>
+        <div class="output-section">
+            <table class="person-table" id="personTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>Update Person (PUT)</h2>
+        <form id="updateForm">
+            <input type="text" id="updateId" placeholder="Person ID to Update" required>
+            <input type="text" id="updateName" placeholder="New Name" required>
+            <input type="text" id="updatePhonenumber" placeholder="New Phone Number" required>
+            <button type="submit">Update Person</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8080/api/v1/person';
+
+    // POST: Register a new person
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const phonenumber = document.getElementById('phonenumber').value;
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, phonenumber })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Registration successful!');
+                document.getElementById('registrationForm').reset();
+                getPeople(); // Refresh the list
+            } else {
+                alert('Failed to register person. Check server logs.');
+            }
+        });
+    });
+
+    // GET: Fetch all people
+    function getPeople() {
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#personTable tbody');
+                tbody.innerHTML = '';
+                data.forEach(person => {
+                    const row = tbody.insertRow();
+                    row.insertCell(0).textContent = person.id;
+                    row.insertCell(1).textContent = person.name;
+                    row.insertCell(2).textContent = person.phonenumber;
+
+                    const actionsCell = row.insertCell(3);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = () => deletePerson(person.id);
+                    actionsCell.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // PUT: Update a person
+    document.getElementById('updateForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const id = document.getElementById('updateId').value;
+        const name = document.getElementById('updateName').value;
+        const phonenumber = document.getElementById('updatePhonenumber').value;
+
+        fetch(`${API_URL}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, phonenumber })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Update successful!');
+                document.getElementById('updateForm').reset();
+                getPeople();
+            } else {
+                alert('Failed to update person. Check ID.');
+            }
+        });
+    });
+
+    // DELETE: Delete a person
+    function deletePerson(id) {
+        if (confirm('Are you sure you want to delete this person?')) {
+            fetch(`${API_URL}/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Deletion successful!');
+                    getPeople();
+                } else {
+                    alert('Failed to delete person.');
+                }
+            });
+        }
+    }
+
+    // Load initial data
+    window.onload = getPeople;
+</script>
+
+</body>
+</html>
