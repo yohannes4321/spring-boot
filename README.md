@@ -49,7 +49,7 @@ mvn clean package
 This will generate a JAR file in the target/ folder.
 
 Step 3: Run the Backend
-```
+
 java -jar target/demo-0.0.1-SNAPSHOT.jar
 When Tomcat starts successfully, it runs on port 8080.
 
@@ -66,7 +66,6 @@ Open your browser:
 | `/api/v1/person/{id}` | PUT         | Update an existing person   |
 | `/api/v1/person/{id}` | DELETE      | Delete a person by their ID |
 
-```
 
 
 
